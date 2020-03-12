@@ -2,31 +2,19 @@ import * as React from 'react';
 import { StateGetter } from './types';
 import { Store } from './Store';
 
-export function useMappedState<T1, R>(
-  stateGetters: [StateGetter<T1>],
-  mapper: (state1: T1) => R,
+export function useMappedState<
+  T extends [] | [StateGetter<any>, ...StateGetter<any>[]],
+  R
+>(
+  stateGetters: T,
+  mapper: (
+    ...args: T extends StateGetter<any>[]
+      ? { [P in keyof T]: T[P] extends StateGetter<infer S> ? S : never }
+      : never
+  ) => R,
   deps?: any[]
 ): R;
-export function useMappedState<T1, T2, R>(
-  stateGetters: [StateGetter<T1>, StateGetter<T2>],
-  mapper: (state1: T1, state2: T2) => R,
-  deps?: any[]
-): R;
-export function useMappedState<T1, T2, T3, R>(
-  stateGetters: [StateGetter<T1>, StateGetter<T2>, StateGetter<T3>],
-  mapper: (state1: T1, state2: T2, state3: T3) => R,
-  deps?: any[]
-): R;
-export function useMappedState<T1, T2, T3, T4, R>(
-  stateGetters: [
-    StateGetter<T1>,
-    StateGetter<T2>,
-    StateGetter<T3>,
-    StateGetter<T4>
-  ],
-  mapper: (state1: T1, state2: T2, state3: T3, state4: T4) => R,
-  deps?: any[]
-): R;
+
 export function useMappedState(
   stateGetters: StateGetter<any>[],
   mapper: (...args: any[]) => any,

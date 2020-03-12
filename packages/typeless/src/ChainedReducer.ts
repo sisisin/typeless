@@ -116,24 +116,13 @@ export class ChainedReducer<S> {
   }
 
   on<T extends AC>(actionCreator: T, fn: OnHandler<S, T>) {
-    this.transform(
-      actionCreator,
-      (state, action: any) =>
-        produce(state, draft => fn(draft as S, action.payload, action))!
-    );
+    this.transform(actionCreator, this.createReducerFn(fn));
     return this.asReducer();
   }
 
-  onMany<T extends AC, T2 extends AC>(
-    actionCreator: [T, T2],
-    fn: OnHandler<S, T | T2>
-  ): Reducer<S> & this;
-  onMany<T extends AC, T2 extends AC, T3 extends AC>(
-    actionCreator: [T, T2, T3],
-    fn: OnHandler<S, T | T2 | T3>
-  ): Reducer<S> & this;
-  onMany(actionCreator: any, fn: OnHandler<S, AC>) {
-    return this.on(actionCreator, fn);
+  onMany<T extends [...AC[]]>(actionCreator: T, fn: OnHandler<S, T[number]>) {
+    this.transform(actionCreator, this.createReducerFn(fn));
+    return this.asReducer();
   }
 
   private getReducer() {
@@ -161,6 +150,11 @@ export class ChainedReducer<S> {
       map.set(type, []);
     }
     return map.get(type)!;
+  }
+
+  private createReducerFn(fn: OnHandler<S, any>): Reducer<S> {
+    return (state, action: any) =>
+      produce(state, draft => fn(draft as S, action.payload, action))!;
   }
 
   private transform(actionCreators: AC | AC[], reducerFn: Reducer<S>) {
