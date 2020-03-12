@@ -1,12 +1,12 @@
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import { act } from 'react-dom/test-utils';
-import { createModule } from '../src/createModule';
-import { useMappedState } from '../src/useMappedState';
-import { useActions } from '../src/useActions';
-import { createSelector } from '../src/createSelector';
-import { useSelector } from '../src/useSelector';
-import { DefaultTypelessProvider } from '../src/TypelessContext';
+import { createModule } from '../../src/createModule';
+import { useMappedState } from '../../src/useMappedState';
+import { useActions } from '../../src/useActions';
+import { createSelector } from '../../src/createSelector';
+import { useSelector } from '../../src/useSelector';
+import { DefaultTypelessProvider } from '../../src/TypelessContext';
 
 let container: HTMLDivElement = null!;
 

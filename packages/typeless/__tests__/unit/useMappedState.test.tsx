@@ -1,12 +1,12 @@
 import React from 'react';
-import { createModule } from '../src/createModule';
-import { useMappedState } from '../src/useMappedState';
+import { createModule } from '../../src/createModule';
+import { useMappedState } from '../../src/useMappedState';
 import { act } from 'react-dom/test-utils';
-import { TypelessContext } from '../src/TypelessContext';
-import { Registry } from '../src/Registry';
+import { TypelessContext } from '../../src/TypelessContext';
+import { Registry } from '../../src/Registry';
 import ReactDOM from 'react-dom';
 import { shallowEqualObjects } from 'shallow-equal';
-import { useActions } from '../src/useActions';
+import { useActions } from '../../src/useActions';
 
 let container: HTMLDivElement = null!;
 let registry: Registry = null!;

@@ -1,11 +1,11 @@
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import { act } from 'react-dom/test-utils';
-import { createModule } from '../src/createModule';
-import * as Rx from '../src/rx/rx';
-import { TypelessContext } from '../src/TypelessContext';
-import { Registry } from '../src/Registry';
-import { startHmr, stopHmr } from '../src/onHmr';
+import { createModule } from '../../src/createModule';
+import * as Rx from '../../src/rx/rx';
+import { TypelessContext } from '../../src/TypelessContext';
+import { Registry } from '../../src/Registry';
+import { startHmr, stopHmr } from '../../src/onHmr';
 
 let container: HTMLDivElement = null!;
 let ModuleSymbol: symbol = null!;

@@ -1,9 +1,9 @@
 import React, { createElement } from 'react';
 import ReactDOM from 'react-dom';
 import { act } from 'react-dom/test-utils';
-import { createModule } from '../src/createModule';
-import { Registry } from '../src/Registry';
-import { TypelessContext } from '../src/TypelessContext';
+import { createModule } from '../../src/createModule';
+import { Registry } from '../../src/Registry';
+import { TypelessContext } from '../../src/TypelessContext';
 
 test('createModule with actions', () => {
   const [, Actions] = createModule(Symbol('foo')).withActions({

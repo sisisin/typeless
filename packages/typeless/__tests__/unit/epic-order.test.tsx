@@ -1,10 +1,9 @@
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import { act } from 'react-dom/test-utils';
-import { createModule } from '../src/createModule';
-import { TypelessContext } from '../src/TypelessContext';
-import { Registry } from '../src/Registry';
-import { of } from 'rxjs';
+import { createModule } from '../../src/createModule';
+import { TypelessContext } from '../../src/TypelessContext';
+import { Registry } from '../../src/Registry';
 
 let container: HTMLDivElement = null!;
 let registry: Registry;
@@ -33,16 +32,21 @@ function render(node: React.ReactChild) {
   });
 }
 
-test('epic should ignore action when returned null value', () => {
+test('epic should be in correct sync order', () => {
+  // keep consistency with redux-observable
+  // https://github.com/redux-observable/redux-observable/commit/d3516bf
+
   const [useModule, Actions] = createModule(Symbol('sample')).withActions({
     a: null,
+    b: null,
+    c: null,
+    d: null,
   });
 
   useModule
     .epic()
-    .on(Actions.a, () => null)
-    .on(Actions.a, () => Promise.resolve(null))
-    .on(Actions.a, () => of(null));
+    .on(Actions.a, () => [Actions.b(), Actions.c()])
+    .on(Actions.b, () => Actions.d());
 
   function App(): ReturnType<React.FC> {
     useModule();
@@ -53,5 +57,10 @@ test('epic should ignore action when returned null value', () => {
     registry.dispatch(Actions.a());
   });
 
-  expect(dispatch.mock.calls.map(call => call[0].type[1])).toEqual(['A']);
+  expect(dispatch.mock.calls.map(call => call[0].type[1])).toEqual([
+    'A',
+    'B',
+    'C',
+    'D',
+  ]);
 });

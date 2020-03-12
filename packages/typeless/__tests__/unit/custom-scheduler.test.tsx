@@ -2,9 +2,9 @@ import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import { act } from 'react-dom/test-utils';
 import { VirtualTimeScheduler, of, asyncScheduler } from 'rxjs';
-import { createModule } from '../src/createModule';
-import { useActions } from '../src/useActions';
-import { DefaultTypelessProvider } from '../src/TypelessContext';
+import { createModule } from '../../src/createModule';
+import { useActions } from '../../src/useActions';
+import { DefaultTypelessProvider } from '../../src/TypelessContext';
 import { delay } from 'rxjs/operators';
 
 let container: HTMLDivElement = null!;
